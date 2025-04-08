@@ -105,6 +105,7 @@ const calcularPesoIdeal = async () => {
   try {
     const response = await calcularPesoIdealRequest(pessoa.value.id)
     pesoIdeal.value = response.data.peso_ideal
+    alert(`O peso ideal é: ${pesoIdeal.value} kg`)
   } catch (error) {
     console.error('Erro ao calcular peso ideal:', error)
   }
