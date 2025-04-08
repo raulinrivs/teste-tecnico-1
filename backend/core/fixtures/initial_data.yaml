@@ -1,0 +1,9 @@
+- model: core.Pessoa
+  pk: 1
+  fields:
+    nome: "Mateus Raulino"
+    data_nasc: "1997-07-20"
+    cpf: "05278807954"
+    sexo: "M"
+    altura: 1.80
+    peso: 60.0

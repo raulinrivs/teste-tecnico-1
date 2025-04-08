@@ -1,0 +1,46 @@
+services:
+  django:
+    container_name: django-local
+    build:
+      context: .
+      dockerfile: Dockerfile.back
+      target: builder
+    working_dir: /home/app/api
+    env_file:
+      - ./backend/.env.local
+    command: >
+      sh -c "python manage.py loaddata initial_data.yaml && python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    volumes:
+      - ./backend:/home/app/api
+    restart: always
+
+  db:
+    container_name: db-local
+    image: postgres
+    restart: always
+    env_file:
+      - .env.local
+    ports:
+      - "5432:5432"
+    volumes:
+      - db:/var/lib/postgresql/data
+
+  frontend:
+    env_file:
+      - .env.local
+    build:
+      context: .
+      dockerfile: Dockerfile.front
+    command: ["nginx", "-g", "daemon off;"]
+    container_name: frontend-local
+    ports:
+      - 80:80
+    restart: always
+
+volumes:
+  db:
+    driver: local
