@@ -9,7 +9,10 @@ services:
     env_file:
       - ./backend/.env.local
     command: >
-      sh -c "python manage.py loaddata initial_data.yaml && python manage.py runserver 0.0.0.0:8000"
+      sh -c "python manage.py makemigations && 
+        python manage.py migrate && 
+        python manage.py loaddata initial_data.yaml && 
+        python manage.py runserver 0.0.0.0:8000"
     ports:
       - "8000:8000"
     depends_on:
